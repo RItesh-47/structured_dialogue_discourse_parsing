@@ -179,8 +179,8 @@ if __name__ == '__main__':
     test_dataset = SelectionDataset(os.path.join(args.test_data_dir, 'test.txt'), args, tokenizer)
     test_dataloader = DataLoader(test_dataset, batch_size=args.eval_batch_size, collate_fn=test_dataset.batchify_join_str, shuffle=False, num_workers=1)
 
-    # encoder_config = AutoConfig.from_pretrained(os.path.join(args.encoder_model, 'config.json'))
-    encoder_config = AutoConfig.from_pretrained(args.encoder_model)
+    encoder_config = AutoConfig.from_pretrained(os.path.join(args.encoder_model, 'config.json'))
+    # encoder_config = AutoConfig.from_pretrained(args.encoder_model)
 
     if not args.eval:
         if not os.path.exists(args.output_dir):
