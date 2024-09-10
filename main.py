@@ -167,8 +167,8 @@ if __name__ == '__main__':
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     set_seed(args)
 
-    # tokenizer = AutoTokenizer.from_pretrained(args.encoder_model)
-    tokenizer = AutoTokenizer.from_pretrained(args.encoder_model, use_auth_token=True)  # if using a private model
+    tokenizer = AutoTokenizer.from_pretrained(args.encoder_model)
+    # tokenizer = AutoTokenizer.from_pretrained(args.encoder_model, use_auth_token=True)  # if using a private model
 
     if not args.eval:
         train_dataset = SelectionDataset(os.path.join(args.data_dir, 'train.txt'), args, tokenizer)
