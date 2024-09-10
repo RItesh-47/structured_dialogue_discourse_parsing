@@ -168,7 +168,7 @@ if __name__ == '__main__':
     set_seed(args)
 
     # tokenizer = AutoTokenizer.from_pretrained(args.encoder_model)
-    tokenizer = AutoTokenizer.from_pretrained("FacebookAI/roberta-base")  # if using a private model
+    tokenizer = AutoTokenizer.from_pretrained(args.encoder_model)  # if using a private model
 
     if not args.eval:
         train_dataset = SelectionDataset(os.path.join(args.data_dir, 'train.txt'), args, tokenizer)
@@ -179,15 +179,15 @@ if __name__ == '__main__':
     test_dataset = SelectionDataset(os.path.join(args.test_data_dir, 'test.txt'), args, tokenizer)
     test_dataloader = DataLoader(test_dataset, batch_size=args.eval_batch_size, collate_fn=test_dataset.batchify_join_str, shuffle=False, num_workers=1)
 
-    # encoder_config = AutoConfig.from_pretrained(os.path.join(args.encoder_model, 'config.json'))
-    encoder_config = AutoConfig.from_pretrained("FacebookAI/roberta-base")
+    encoder_config = AutoConfig.from_pretrained(os.path.join(args.encoder_model, 'config.json'))
+    # encoder_config = AutoConfig.from_pretrained(args.encoder_model)
 
     if not args.eval:
         if not os.path.exists(args.output_dir):
             os.makedirs(args.output_dir)
         log_wf = open(os.path.join(args.output_dir, 'log.txt'), 'a')
         shutil.copy(os.path.join(args.encoder_model, 'config.json'), args.output_dir)
-        shutil.copy(os.path.join(args.encoder_model, 'tokenizer.json'), args.output_dir)
+        # shutil.copy(os.path.join(args.encoder_model, 'tokenizer.json'), args.output_dir)
         encoder = AutoModel.from_pretrained(args.encoder_model)
     else:
         encoder = AutoModel.from_config(encoder_config)
