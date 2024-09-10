@@ -167,8 +167,8 @@ if __name__ == '__main__':
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     set_seed(args)
 
-    tokenizer = AutoTokenizer.from_pretrained(args.encoder_model)
-    # tokenizer = AutoTokenizer.from_pretrained(args.encoder_model, use_auth_token=True)  # if using a private model
+    # tokenizer = AutoTokenizer.from_pretrained(args.encoder_model)
+    tokenizer = AutoTokenizer.from_pretrained("FacebookAI/roberta-base")  # if using a private model
 
     if not args.eval:
         train_dataset = SelectionDataset(os.path.join(args.data_dir, 'train.txt'), args, tokenizer)
@@ -179,8 +179,8 @@ if __name__ == '__main__':
     test_dataset = SelectionDataset(os.path.join(args.test_data_dir, 'test.txt'), args, tokenizer)
     test_dataloader = DataLoader(test_dataset, batch_size=args.eval_batch_size, collate_fn=test_dataset.batchify_join_str, shuffle=False, num_workers=1)
 
-    encoder_config = AutoConfig.from_pretrained(os.path.join(args.encoder_model, 'config.json'))
-    # encoder_config = AutoConfig.from_pretrained(args.encoder_model)
+    # encoder_config = AutoConfig.from_pretrained(os.path.join(args.encoder_model, 'config.json'))
+    encoder_config = AutoConfig.from_pretrained("FacebookAI/roberta-base")
 
     if not args.eval:
         if not os.path.exists(args.output_dir):
